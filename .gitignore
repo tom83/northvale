@@ -46,3 +46,4 @@
 /html/
 
 # NOT ignored on purpose: /config, /content, /files (Tome Sync source of truth)
+/.editorconfig
