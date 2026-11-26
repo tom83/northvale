@@ -20,7 +20,7 @@ jobs:
     name: Lint, static analysis and tests
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -29,7 +29,7 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.cache/composer
           key: composer-${{ runner.os }}-${{ hashFiles('composer.lock', 'composer.json') }}
@@ -51,7 +51,7 @@ jobs:
     needs: quality
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Check for a Tome export
         id: export
@@ -86,7 +86,7 @@ jobs:
         if: steps.export.outputs.ready == 'true'
         run: vendor/bin/drush tome:static -y --uri="${{ vars.SITE_URL || 'https://northvale.pages.dev' }}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: steps.export.outputs.ready == 'true'
         with:
           name: static-site
