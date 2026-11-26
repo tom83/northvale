@@ -32,7 +32,8 @@
             "drupal/core-composer-scaffold": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
-            "tbachert/spi": false
+            "tbachert/spi": false,
+            "symfony/runtime": true
         },
         "sort-packages": true,
         "optimize-autoloader": true
