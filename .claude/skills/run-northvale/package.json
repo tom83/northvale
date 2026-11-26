@@ -1,0 +1,9 @@
+{
+  "name": "run-northvale-driver",
+  "private": true,
+  "type": "module",
+  "description": "Headless browser driver for the Northvale DDEV site. Runs inside the DDEV web container.",
+  "dependencies": {
+    "playwright": "1.64.1"
+  }
+}
