@@ -10,7 +10,7 @@ database:
 composer_version: "2"
 nodejs_version: "22"
 # Tome Sync files (config/, content/, files/) are the source of truth.
-# The database is disposable: `ddev drush tome:install -y` rebuilds it.
+# The database is disposable: `ddev rebuild` rebuilds it.
 web_environment:
   - SIMPLETEST_DB=mysql://db:db@db/db
   - SIMPLETEST_BASE_URL=http://web

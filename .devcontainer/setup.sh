@@ -6,7 +6,7 @@ ddev start
 ddev composer install --no-interaction
 
 if [ -f config/core.extension.yml ]; then
-  ddev drush tome:install -y
+  ddev rebuild
   echo
   echo "Site ready. Get a one-time admin login link with:  ddev drush uli"
 else

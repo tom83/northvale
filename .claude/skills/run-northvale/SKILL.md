@@ -28,8 +28,16 @@ git checkout web/sites/default/settings.php   # site:install appended DB creds +
 ddev drush cr
 ```
 
-Once `config/` holds a Tome export, the README's `ddev drush tome:install -y`
-replaces the `site:install`/`pm:install` lines (not yet verified here).
+Once `config/` holds a Tome export, `ddev rebuild` replaces the
+`site:install`/`pm:install` lines. It wipes the DB, then runs
+`site:install --existing-config` + `tome:import` (Tome 1.x has no
+`tome:install`, despite older docs). Without an export it stops with
+`No Tome export in web/../config yet`. To rebuild from another export dir
+(e.g. the spike's):
+
+```bash
+ddev exec 'NORTHVALE_SYNC_ROOT=../.spike DRUSH=drush bash scripts/rebuild.sh'
+```
 
 ## Run (agent path)
 

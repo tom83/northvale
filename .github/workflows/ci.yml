@@ -77,11 +77,10 @@ jobs:
       - name: Rebuild site from Tome export (SQLite)
         if: steps.export.outputs.ready == 'true'
         run: |
-          mkdir -p .sqlite
           salt="$(openssl rand -hex 32)"
           echo "::add-mask::$salt"
           echo "DRUPAL_HASH_SALT=$salt" >> "$GITHUB_ENV"
-          DRUPAL_HASH_SALT="$salt" vendor/bin/drush tome:install -y
+          DRUPAL_HASH_SALT="$salt" bash scripts/rebuild.sh
 
       - name: Generate static HTML
         if: steps.export.outputs.ready == 'true'

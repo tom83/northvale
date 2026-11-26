@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+## Description: Rebuild the database from the Tome export (WIPES the local DB).
+## Usage: rebuild
+## Example: "ddev rebuild"
+
+set -euo pipefail
+DRUSH=drush bash scripts/rebuild.sh

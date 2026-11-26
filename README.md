@@ -14,12 +14,13 @@ build, without using any client's code or content.
 ```
 Local (DDEV)                 GitHub Actions                    Static host
 Drupal 11 + Layout Builder   composer install                  Cloudflare Pages
-Tome Sync writes             drush tome:install (SQLite)  ─►   (free tier)
+Tome Sync writes             scripts/rebuild.sh (SQLite)  ─►   (free tier)
 config/ content/ files/ ─►   drush tome:static → html/
 ```
 
 - `config/`, `content/` and `files/` are the source of truth and are committed.
-- The database is disposable. `drush tome:install` rebuilds it from git.
+- The database is disposable. `ddev rebuild` (`scripts/rebuild.sh`) rebuilds it
+  from git.
 - Decisions are recorded in [docs/adr](docs/adr).
 
 ## Getting started
@@ -34,10 +35,10 @@ ddev composer install
 
 # First time only, before there is a Tome export:
 ddev drush site:install minimal -y
-ddev drush pm:install -y tome layout_builder council_core
+ddev drush pm:install -y tome layout_builder council_core council_tome
 
 # Every time after that:
-ddev drush tome:install -y   # rebuild the database from config/ + content/
+ddev rebuild                 # rebuild the database from config/ + content/
 ddev drush uli               # one-time admin login link
 ```
 
@@ -48,6 +49,7 @@ To export everything at once, run `ddev drush tome:export -y`.
 
 | Command | What it does |
 |---|---|
+| `ddev rebuild` | Rebuild the database from the Tome export (**wipes the local DB**) |
 | `ddev qa` | PHPCS (Drupal standards) + PHPStan (level 6) + PHPUnit |
 | `ddev qa lint` / `analyse` / `test` | Run just one of those |
 | `ddev build-static [uri]` | Export the site to `./html` |
