@@ -17,20 +17,19 @@ go through `ddev exec`.
 `ddev` and `docker` on the host. Nothing else: PHP, Composer, Node and drush
 come from the DDEV web container.
 
-## Setup (cold start, no Tome export yet)
+## Setup (cold start)
 
 ```bash
 ddev start
 ddev composer install
-ddev drush site:install minimal -y
-ddev drush pm:install -y tome layout_builder council_core council_tome
+ddev rebuild
 ```
 
-Once `config/` holds a Tome export, `ddev rebuild` replaces the
-`site:install`/`pm:install` lines. It wipes the DB, then runs
-`site:install --existing-config` + `tome:import` (Tome 1.x has no
-`tome:install`, despite older docs). Without an export it stops with
-`No Tome export in web/../config yet`. To rebuild from another export dir
+`ddev rebuild` wipes the SQLite DB and rebuilds it from the committed Tome
+export (`config/`, `content/`, `files/`): `site:install --existing-config`
+then `tome:import`. Tome 1.x has no `tome:install`, despite older docs. Re-run
+it any time to get back to the state in git (e.g. after `ddev spike`, which
+replaces the site with spike content). To rebuild from another export dir
 (e.g. the spike's):
 
 ```bash
@@ -77,7 +76,7 @@ After changing PHP (new hooks, services, routes) run `ddev drush cr` first.
 
 ```bash
 ddev build-static                                    # wipes and rewrites ./html
-grep -o '<title>[^<]*' html/index.html               # -> "Log in | Drush Site-Install" on a fresh minimal install
+grep -o '<title>[^<]*' html/index.html               # -> "Log in | Northvale Council"
 ```
 
 ## Test
