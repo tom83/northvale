@@ -1,0 +1,32 @@
+# Weekly dependency update PRs. CI runs on each one (lint, PHPStan, PHPUnit,
+# static build from the Tome export).
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+    # Only propose releases at least two weeks old.
+    cooldown:
+      default-days: 14
+    groups:
+      # Core and its scaffold/recommended/dev packages move together.
+      drupal-core:
+        patterns:
+          - "drupal/core*"
+      dev-tools:
+        dependency-type: development
+    # drupal/tome is left out of the groups on purpose: council_tome extends
+    # Tome internals, so every Tome upgrade gets its own PR. Before merging,
+    # run the council_tome kernel test and `ddev spike` (docs/adr/0001).
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    groups:
+      github-actions:
+        patterns:
+          - "*"

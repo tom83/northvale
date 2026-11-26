@@ -1,5 +1,7 @@
 # Northvale Council
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/tom83/northvale?quickstart=1)
+
 A white-label UK local council website built with **Drupal 11** and **Layout
 Builder**, and published as flat HTML with **Tome**, so hosting is free.
 
@@ -27,7 +29,8 @@ config/ content/ files/ ─►   drush tome:static → html/
 
 Needs WSL2 and [DDEV](https://ddev.com) (on Windows, put the project inside
 the WSL filesystem, e.g. `~/projects/northvale`, not under `/mnt/c`). You can
-also click **Code → Codespaces** on GitHub to get a ready-made environment.
+also use the **Open in GitHub Codespaces** button above to get a ready-made
+environment.
 
 ```bash
 ddev start
