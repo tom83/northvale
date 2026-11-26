@@ -99,3 +99,7 @@ Consequences:
 - Importing an aliased node creates a duplicate path alias: one from the
   node's `path` field and one from the exported `path_alias` entity. Revisit
   when pathauto is added in Phase 2.
+- On Drupal 11, Tome's `PathAliasNormalizer` claims every content entity, so
+  its `UserEntityNormalizer` never runs and users were exported with login
+  timestamps. Every `drush uli` login then changed `content/`.
+  `council_tome`'s `UserNormalizer` fixes this (`UserExportTest`).

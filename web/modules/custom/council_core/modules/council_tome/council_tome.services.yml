@@ -7,6 +7,13 @@ services:
     tags:
       - { name: normalizer, priority: 4 }
 
+  # Above Tome's PathAliasNormalizer (3), which wrongly claims users.
+  council_tome.normalizer.user:
+    class: Drupal\council_tome\Normalizer\UserNormalizer
+    arguments: ['@entity_type.manager', '@entity_type.repository', '@entity_field.manager']
+    tags:
+      - { name: normalizer, priority: 5 }
+
   council_tome.inline_block_sync_subscriber:
     class: Drupal\council_tome\EventSubscriber\InlineBlockSyncSubscriber
     arguments: ['@entity_type.manager', '@inline_block.usage', '@file_system']

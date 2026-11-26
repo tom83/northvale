@@ -7,9 +7,9 @@ parameters:
   drupal:
     drupal_root: web
   ignoreErrors:
-    # Deliberate: extends Tome's entity normalizer to keep its ID stripping
-    # rather than copy it. Tome is pinned in composer.lock; the kernel test
-    # covers the behaviour this relies on.
+    # Deliberate: council_tome's normalizers extend Tome's to keep its ID
+    # stripping rather than copy it. Tome is pinned in composer.lock; the
+    # kernel tests cover the behaviour this relies on.
     -
       identifier: classExtendsInternalClass.classExtendsInternalClass
-      path: web/modules/custom/council_core/modules/council_tome/src/Normalizer/LayoutOverrideNormalizer.php
+      path: web/modules/custom/council_core/modules/council_tome/src/Normalizer/*
