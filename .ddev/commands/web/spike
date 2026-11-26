@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+## Description: Run the Phase 0 Tome spike. WIPES the local database.
+## Usage: spike
+## Example: "ddev spike"
+
+set -euo pipefail
+DRUSH=drush bash scripts/spike/run.sh

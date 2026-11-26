@@ -1,0 +1,5 @@
+name: Council Core
+type: module
+description: 'Site-specific functionality for the Northvale Council website.'
+package: Northvale
+core_version_requirement: ^11.1

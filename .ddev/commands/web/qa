@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+## Description: Run PHPCS, PHPStan and PHPUnit against custom code.
+## Usage: qa [lint|analyse|test]
+## Example: "ddev qa" or "ddev qa lint"
+
+set -euo pipefail
+
+case "${1:-all}" in
+  lint) composer lint ;;
+  analyse) composer analyse ;;
+  test) composer test ;;
+  all) composer qa ;;
+  *) echo "Unknown target: $1 (use lint, analyse or test)"; exit 1 ;;
+esac

@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PHP_VERSION: '8.3'
+
+jobs:
+  quality:
+    name: Lint, static analysis and tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: gd, pdo_sqlite, sqlite3, mbstring, xml, curl, zip
+          tools: composer:v2
+          coverage: none
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock', 'composer.json') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: PHPCS (Drupal, DrupalPractice)
+        run: composer lint
+
+      - name: PHPStan
+        run: composer analyse
+
+      - name: PHPUnit
+        run: composer test
+
+  build:
+    name: Build static site
+    needs: quality
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for a Tome export
+        id: export
+        run: |
+          if [ -f config/core.extension.yml ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No Tome export in config/ yet - skipping the static build."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: shivammathur/setup-php@v2
+        if: steps.export.outputs.ready == 'true'
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: gd, pdo_sqlite, sqlite3, mbstring, xml, curl, zip
+          tools: composer:v2
+          coverage: none
+
+      - if: steps.export.outputs.ready == 'true'
+        run: composer install --no-interaction --no-progress --prefer-dist --no-dev
+
+      - name: Rebuild site from Tome export (SQLite)
+        if: steps.export.outputs.ready == 'true'
+        run: |
+          mkdir -p .sqlite
+          salt="$(openssl rand -hex 32)"
+          echo "::add-mask::$salt"
+          echo "DRUPAL_HASH_SALT=$salt" >> "$GITHUB_ENV"
+          DRUPAL_HASH_SALT="$salt" vendor/bin/drush tome:install -y
+
+      - name: Generate static HTML
+        if: steps.export.outputs.ready == 'true'
+        run: vendor/bin/drush tome:static -y --uri="${{ vars.SITE_URL || 'https://northvale.pages.dev' }}"
+
+      - uses: actions/upload-artifact@v4
+        if: steps.export.outputs.ready == 'true'
+        with:
+          name: static-site
+          path: html
+          retention-days: 7

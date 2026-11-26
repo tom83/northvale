@@ -1,0 +1,38 @@
+name: Phase 0 spike
+
+# Runs scripts/spike/run.sh on a clean Ubuntu runner with SQLite.
+# Trigger manually from the Actions tab.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  spike:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: gd, pdo_sqlite, sqlite3, mbstring, xml, curl, zip
+          tools: composer:v2
+          coverage: none
+
+      - run: composer install --no-interaction --no-progress --prefer-dist --no-dev
+
+      - name: Run spike
+        env:
+          SITE_URL: https://northvale.example
+        run: |
+          export DRUPAL_HASH_SALT="$(openssl rand -hex 32)"
+          bash scripts/spike/run.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spike-output
+          path: .spike
+          retention-days: 7

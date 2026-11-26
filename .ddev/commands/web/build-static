@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+## Description: Export the site to flat HTML in ./html with Tome Static.
+## Usage: build-static [uri]
+## Example: "ddev build-static" or "ddev build-static https://northvale.pages.dev"
+
+set -euo pipefail
+
+URI="${1:-${SITE_URL:-https://northvale.ddev.site}}"
+
+rm -rf html
+drush tome:static -y --uri="$URI"
+echo "Static site written to ./html for $URI"

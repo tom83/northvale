@@ -1,0 +1,17 @@
+name: northvale
+type: drupal11
+docroot: web
+php_version: "8.3"
+webserver_type: nginx-fpm
+xdebug_enabled: false
+database:
+  type: mariadb
+  version: "10.11"
+composer_version: "2"
+nodejs_version: "22"
+# Tome Sync files (config/, content/, files/) are the source of truth.
+# The database is disposable: `ddev drush tome:install -y` rebuilds it.
+web_environment:
+  - SIMPLETEST_DB=mysql://db:db@db/db
+  - SIMPLETEST_BASE_URL=http://web
+  - SITE_URL=https://northvale.ddev.site

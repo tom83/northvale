@@ -1,0 +1,8 @@
+# phpstan-drupal and the deprecation rules are loaded automatically by
+# phpstan/extension-installer (both come with drupal/core-dev).
+parameters:
+  level: 6
+  paths:
+    - web/modules/custom
+  drupal:
+    drupal_root: web
