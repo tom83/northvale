@@ -9,7 +9,7 @@
 # Everything Tome writes goes to ./.spike, never to ./config or ./content.
 #
 # Checks:
-#   1. A Layout Builder inline block survives tome:export -> tome:install.
+#   1. A Layout Builder inline block survives tome:export -> wipe -> tome:import.
 #   2. Aggregated CSS and JS are written to the static output.
 #   3. Image style derivatives are written to the static output.
 #   4. How the front page pager is exported (reported, not pass/fail).
@@ -36,7 +36,7 @@ step "Installing a fresh site (minimal profile)"
 $DRUSH site:install minimal -y --site-name="Northvale Council (spike)" --account-name=admin
 
 step "Enabling modules and theme"
-$DRUSH pm:install -y node views text image file block_content layout_builder layout_discovery path tome
+$DRUSH pm:install -y node views text image file block_content layout_builder layout_discovery path tome council_tome
 $DRUSH theme:install -y olivero
 $DRUSH config:set -y system.theme default olivero
 $DRUSH config:set -y system.site page.front /node
@@ -52,8 +52,14 @@ $DRUSH tome:export -y
 echo "Exported $(find "$SPIKE_DIR/content" -type f | wc -l) content files, $(find "$SPIKE_DIR/config" -type f | wc -l) config files."
 echo "Block content JSON files:"; ls "$SPIKE_DIR/content" | grep '^block_content' || echo "  (none!)"
 
-step "Rebuilding the site from the export (tome:install)"
-$DRUSH tome:install -y
+# Tome 1.x has no tome:install (despite older docs). Rebuild = a fresh install
+# from the exported config (so tome and the other modules are enabled and the
+# site UUID matches), then tome:import for content and files. Delete the
+# spike's uploaded files too, so the image has to come back from the export.
+step "Wiping the site and rebuilding it from the export (site:install --existing-config + tome:import)"
+rm -rf "$ROOT/web/sites/default/files/spike"
+$DRUSH site:install --existing-config -y --account-name=admin
+$DRUSH tome:import -y
 
 step "Generating static HTML"
 $DRUSH tome:static -y --uri="$URI"
@@ -79,7 +85,8 @@ style_count=$(find "$HTML" -path '*/styles/medium/*' -type f | wc -l)
 [ "$style_count" -gt 0 ] && pass "$style_count image style derivative(s)" || fail "No image style derivatives in output"
 
 echo "  INFO  Pager links on the front page:"
-grep -o 'href="[^"]*page=[^"]*"' "$HTML/index.html" | sort -u | sed 's/^/          /' || echo "          (none found)"
+# Tome rewrites ?page=N links to /page/N+1 paths, so look for both.
+grep -oE 'href="[^"]*(page=|/page/)[^"]*"' "$HTML/index.html" | sort -u | sed 's/^/          /' || echo "          (none found)"
 echo "  INFO  Exported files whose path mentions 'page':"
 find "$HTML" -path '*page*' -name '*.html' | sed "s|$HTML|          |" | head -10
 

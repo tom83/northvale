@@ -101,6 +101,11 @@ $component = new SectionComponent(\Drupal::service('uuid')->generate(), 'content
   'block_serialized' => serialize($block),
   'context_mapping' => [],
 ]);
+// Save the node before adding the override, as the UI does (the Layout tab
+// only exists on saved nodes). Layout Builder records inline block usage
+// against the node ID during presave, so adding the section to an unsaved
+// node stores a NULL layout_entity_id and later breaks block access checks
+// (and therefore Tome's export) with "Cannot load the node entity with NULL ID".
 $page = Node::create([
   'type' => 'page',
   'title' => 'Spike landing page',
@@ -108,6 +113,7 @@ $page = Node::create([
   'uid' => 1,
   'path' => ['alias' => '/spike-landing-page'],
 ]);
+$page->save();
 $page->get(OverridesSectionStorage::FIELD_NAME)->appendSection(new Section('layout_onecol', [], [$component]));
 $page->save();
 
