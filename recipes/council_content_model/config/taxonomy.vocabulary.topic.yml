@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Topic'
+vid: topic
+description: 'Subjects that cut across services, news and events, such as Waste, Housing or Planning. Used to build /topic/... listings.'
+weight: 0
+new_revision: false

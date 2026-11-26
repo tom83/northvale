@@ -1,0 +1,11 @@
+uuid: 8ece5012-5c8a-4e88-9886-de895b75d368
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: UD1fwm65ECFCkqLUzw1K2xaaXKvxoYcFcnBDFfUyhVg
+name: 'Service category'
+vid: service_category
+description: 'The council department or service area a service belongs to. Used for the services-by-category listings.'
+weight: 0
+new_revision: false

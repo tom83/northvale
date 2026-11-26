@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Service category'
+vid: service_category
+description: 'The council department or service area a service belongs to. Used for the services-by-category listings.'
+weight: 0
+new_revision: false

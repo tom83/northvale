@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Audience'
+vid: audience
+description: 'Who an event or service is for, such as Residents, Businesses or Young people.'
+weight: 0
+new_revision: false

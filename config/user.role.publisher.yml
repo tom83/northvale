@@ -8,6 +8,11 @@ dependencies:
     - media.type.document
     - media.type.image
     - media.type.remote_video
+    - taxonomy.vocabulary.audience
+    - taxonomy.vocabulary.event_type
+    - taxonomy.vocabulary.service_category
+    - taxonomy.vocabulary.topic
+    - taxonomy.vocabulary.ward
   module:
     - content_moderation
     - contextual
@@ -18,6 +23,7 @@ dependencies:
     - node
     - path
     - system
+    - taxonomy
 id: publisher
 label: Publisher
 weight: 3
@@ -28,16 +34,32 @@ permissions:
   - 'access contextual links'
   - 'access media overview'
   - 'access navigation'
+  - 'access taxonomy overview'
   - 'create document media'
   - 'create image media'
   - 'create remote_video media'
+  - 'create terms in audience'
+  - 'create terms in event_type'
+  - 'create terms in service_category'
+  - 'create terms in topic'
+  - 'create terms in ward'
   - 'create url aliases'
   - 'delete any document media'
   - 'delete any image media'
   - 'delete any remote_video media'
+  - 'delete terms in audience'
+  - 'delete terms in event_type'
+  - 'delete terms in service_category'
+  - 'delete terms in topic'
+  - 'delete terms in ward'
   - 'edit any document media'
   - 'edit any image media'
   - 'edit any remote_video media'
+  - 'edit terms in audience'
+  - 'edit terms in event_type'
+  - 'edit terms in service_category'
+  - 'edit terms in topic'
+  - 'edit terms in ward'
   - 'manage editoria11y results'
   - 'mark as hidden in editoria11y'
   - 'mark as ok in editoria11y'

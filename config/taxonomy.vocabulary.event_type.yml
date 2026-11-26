@@ -1,0 +1,11 @@
+uuid: 0ec0d627-b920-4782-a3db-80fd5eeef33c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: S2wb04rDKREeZR8yFaH9bKrHLLq8VRKguYeMgL__74E
+name: 'Event type'
+vid: event_type
+description: 'Kinds of event, such as Consultation, Family or Council meeting.'
+weight: 0
+new_revision: false

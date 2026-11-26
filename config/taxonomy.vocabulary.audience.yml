@@ -1,0 +1,11 @@
+uuid: 009ca563-6d20-428f-a19c-c5eca31573d2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: F_D15ke9gi2lLFVUTdH9P7szCEaYMwxYruMRTU_Wyxo
+name: Audience
+vid: audience
+description: 'Who an event or service is for, such as Residents, Businesses or Young people.'
+weight: 0
+new_revision: false

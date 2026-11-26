@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Event type'
+vid: event_type
+description: 'Kinds of event, such as Consultation, Family or Council meeting.'
+weight: 0
+new_revision: false

@@ -1,0 +1,11 @@
+uuid: 4b69edb6-7676-4a5b-9b7d-abdab88d6b5d
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: pZikmx_UqNdEuCWwZc3oMLy4Y6P-TIRUzM8wBMAnNTg
+name: Ward
+vid: ward
+description: 'Electoral wards in the district.'
+weight: 0
+new_revision: false
