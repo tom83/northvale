@@ -48,6 +48,7 @@ To export everything at once, run `ddev drush tome:export -y`.
 
 | Command | What it does |
 |---|---|
+| `ddev apply-recipe [dir]` | Apply a recipe (default: `recipes/council_content_model`), then export the whole site with Tome |
 | `ddev rebuild` | Rebuild the database from the Tome export (**wipes the local DB**) |
 | `ddev qa` | PHPCS (Drupal standards) + PHPStan (level 6) + PHPUnit |
 | `ddev qa lint` / `analyse` / `test` | Run just one of those |

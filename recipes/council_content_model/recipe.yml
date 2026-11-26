@@ -1,0 +1,132 @@
+name: 'Council content model'
+description: 'Content types, taxonomies, media, editorial workflow and roles for a UK local council website.'
+type: 'Site'
+
+# Build on core's recipes, as core's own "standard" recipe does. Paths with a
+# slash are relative to the Drupal root (web/).
+recipes:
+  - core/recipes/core_recommended_admin_theme
+  - core/recipes/core_recommended_performance
+  - core/recipes/core_recommended_maintenance
+  - core/recipes/restricted_html_format
+  - core/recipes/basic_html_format_editor
+  - core/recipes/full_html_format_editor
+  - core/recipes/administrator_role
+  - core/recipes/image_media_type
+  - core/recipes/document_media_type
+  - core/recipes/remote_video_media_type
+
+install:
+  # Admin experience.
+  - navigation
+  - help
+  - field_ui
+  - views_ui
+  - menu_ui
+  - menu_link_content
+  - options
+  - datetime
+  # Editorial tooling.
+  - content_moderation
+  - pathauto
+  - metatag
+  - simple_sitemap
+  - linkit
+  - editoria11y
+  - focal_point
+
+config:
+  strict: false
+  # Recipes install only a module's simple config; its config entities (menus,
+  # crop types, profiles, defaults) have to be imported explicitly.
+  import:
+    navigation: '*'
+    content_moderation: '*'
+    focal_point: '*'
+    linkit: '*'
+    metatag: '*'
+    pathauto: '*'
+    simple_sitemap: '*'
+    editoria11y: '*'
+    taxonomy: '*'
+  actions:
+    # Let editors pick the important part of each image, so crops keep it.
+    core.entity_form_display.media.image.default:
+      setComponent:
+        name: field_media_image
+        options:
+          type: image_focal_point
+          weight: 0
+          region: content
+          settings:
+            progress_indicator: throbber
+            preview_image_style: thumbnail
+            preview_link: true
+            offsets: '50,50'
+    core.entity_form_display.media.image.media_library:
+      setComponent:
+        name: field_media_image
+        options:
+          type: image_focal_point
+          weight: 0
+          region: content
+          settings:
+            progress_indicator: throbber
+            preview_image_style: thumbnail
+            preview_link: true
+            offsets: '50,50'
+
+    # Editors write and submit content for review. Content-type permissions
+    # and workflow transitions are added with the content types.
+    user.role.editor:
+      createIfNotExists:
+        label: 'Editor'
+        weight: 2
+      grantPermissions:
+        - 'access administration pages'
+        - 'access content overview'
+        - 'access navigation'
+        - 'access contextual links'
+        - 'view the administration theme'
+        - 'view own unpublished content'
+        - 'access media overview'
+        - 'create image media'
+        - 'create document media'
+        - 'create remote_video media'
+        - 'edit own image media'
+        - 'edit own document media'
+        - 'edit own remote_video media'
+        - 'use text format basic_html'
+        - 'view editoria11y checker'
+        - 'mark as ok in editoria11y'
+
+    # Publishers review and publish everyone's content.
+    user.role.publisher:
+      createIfNotExists:
+        label: 'Publisher'
+        weight: 3
+      grantPermissions:
+        - 'access administration pages'
+        - 'access content overview'
+        - 'access navigation'
+        - 'access contextual links'
+        - 'view the administration theme'
+        - 'view any unpublished content'
+        - 'view latest version'
+        - 'access media overview'
+        - 'create image media'
+        - 'create document media'
+        - 'create remote_video media'
+        - 'edit any image media'
+        - 'edit any document media'
+        - 'edit any remote_video media'
+        - 'delete any image media'
+        - 'delete any document media'
+        - 'delete any remote_video media'
+        - 'use text format basic_html'
+        - 'use text format full_html'
+        - 'create url aliases'
+        - 'view editoria11y checker'
+        - 'mark as ok in editoria11y'
+        - 'mark as hidden in editoria11y'
+        - 'manage editoria11y results'

@@ -90,6 +90,17 @@ Passes with 1 PHPUnit test. PHPStan prints a harmless
 
 ## Gotchas
 
+- **Apply recipes with `ddev apply-recipe`, not `ddev drush recipe`.** Tome
+  doesn't auto-export everything a recipe changes (`core.extension.yml` stays
+  stale), so `config/` no longer matches the DB and the next `ddev rebuild`
+  fails with `depends on the Claro theme that will not be installed after
+  import`. `apply-recipe` runs a full `tome:export` afterwards. To iterate on
+  a recipe: `git checkout config content && git clean -fd config content &&
+  ddev rebuild && ddev apply-recipe`.
+- **Recipes only install a module's simple config.** Its config entities
+  (menus, crop types, profiles, views) must be listed under `config.import`,
+  or e.g. Navigation shows "This block is broken or missing".
+
 - **`symfony/runtime` must be `true` in `allow-plugins`.** Drupal 11.3's
   `web/index.php` requires `vendor/autoload_runtime.php`, which that plugin
   generates. Setting it `false` lets `composer install` pass, but every page

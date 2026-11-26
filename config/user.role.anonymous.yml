@@ -2,7 +2,11 @@ uuid: 1fca63ff-5da8-43d9-8121-49db69f772d2
 langcode: en
 status: true
 dependencies:
+  config:
+    - filter.format.restricted_html
   module:
+    - filter
+    - media
     - system
 _core:
   default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
@@ -12,3 +16,5 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
+  - 'use text format restricted_html'
+  - 'view media'

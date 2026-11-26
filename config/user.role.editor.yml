@@ -1,0 +1,38 @@
+uuid: b0c593d3-2a3d-40d2-bb69-23c5b31f8abd
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+  module:
+    - contextual
+    - editoria11y
+    - filter
+    - media
+    - navigation
+    - node
+    - system
+id: editor
+label: Editor
+weight: 2
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access media overview'
+  - 'access navigation'
+  - 'create document media'
+  - 'create image media'
+  - 'create remote_video media'
+  - 'edit own document media'
+  - 'edit own image media'
+  - 'edit own remote_video media'
+  - 'mark as ok in editoria11y'
+  - 'use text format basic_html'
+  - 'view editoria11y checker'
+  - 'view own unpublished content'
+  - 'view the administration theme'

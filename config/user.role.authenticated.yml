@@ -2,7 +2,11 @@ uuid: 3ef94346-863f-40e8-aa5f-6ae020c2563a
 langcode: en
 status: true
 dependencies:
+  config:
+    - filter.format.basic_html
   module:
+    - filter
+    - media
     - system
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
@@ -12,3 +16,5 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
+  - 'use text format basic_html'
+  - 'view media'

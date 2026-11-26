@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+## Description: Apply a recipe, then export the whole site with Tome.
+## Usage: apply-recipe [recipe-dir]
+## Example: "ddev apply-recipe" or "ddev apply-recipe recipes/council_content_model"
+
+set -euo pipefail
+
+# Tome doesn't auto-export everything a recipe changes (core.extension.yml,
+# for one), so config/ would describe a different site than the database.
+# A full export afterwards keeps `ddev rebuild` working.
+RECIPE="${1:-recipes/council_content_model}"
+drush recipe "/var/www/html/${RECIPE#/var/www/html/}"
+drush tome:export -y

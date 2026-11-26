@@ -1,0 +1,49 @@
+uuid: 54353ad5-d039-4a6d-bdc1-86438405e0ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.full_html
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+  module:
+    - content_moderation
+    - contextual
+    - editoria11y
+    - filter
+    - media
+    - navigation
+    - node
+    - path
+    - system
+id: publisher
+label: Publisher
+weight: 3
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access media overview'
+  - 'access navigation'
+  - 'create document media'
+  - 'create image media'
+  - 'create remote_video media'
+  - 'create url aliases'
+  - 'delete any document media'
+  - 'delete any image media'
+  - 'delete any remote_video media'
+  - 'edit any document media'
+  - 'edit any image media'
+  - 'edit any remote_video media'
+  - 'manage editoria11y results'
+  - 'mark as hidden in editoria11y'
+  - 'mark as ok in editoria11y'
+  - 'use text format basic_html'
+  - 'use text format full_html'
+  - 'view any unpublished content'
+  - 'view editoria11y checker'
+  - 'view latest version'
+  - 'view the administration theme'
