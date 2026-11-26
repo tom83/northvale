@@ -1,0 +1,8 @@
+name: Council Tome
+type: module
+description: 'Tome Sync integration: exports Layout Builder overrides and their inline blocks so they survive a rebuild.'
+package: Northvale
+core_version_requirement: ^11.1
+dependencies:
+  - drupal:layout_builder
+  - tome:tome_sync

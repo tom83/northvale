@@ -1,0 +1,14 @@
+services:
+  # Priority above Tome's entity normalizers (1-3) so node exports go through
+  # this class; below Tome's field-level normalizers, which it doesn't affect.
+  council_tome.normalizer.layout_override:
+    class: Drupal\council_tome\Normalizer\LayoutOverrideNormalizer
+    arguments: ['@entity_type.manager', '@entity_type.repository', '@entity_field.manager']
+    tags:
+      - { name: normalizer, priority: 4 }
+
+  council_tome.inline_block_sync_subscriber:
+    class: Drupal\council_tome\EventSubscriber\InlineBlockSyncSubscriber
+    arguments: ['@entity_type.manager', '@inline_block.usage', '@file_system']
+    tags:
+      - { name: event_subscriber }
