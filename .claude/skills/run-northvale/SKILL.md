@@ -23,9 +23,7 @@ come from the DDEV web container.
 ddev start
 ddev composer install
 ddev drush site:install minimal -y
-ddev drush pm:install -y tome layout_builder council_core
-git checkout web/sites/default/settings.php   # site:install appended DB creds + hash_salt; settings.ddev.php already provides both
-ddev drush cr
+ddev drush pm:install -y tome layout_builder council_core council_tome
 ```
 
 Once `config/` holds a Tome export, `ddev rebuild` replaces the
@@ -97,9 +95,11 @@ Passes with 1 PHPUnit test. PHPStan prints a harmless
   `web/index.php` requires `vendor/autoload_runtime.php`, which that plugin
   generates. Setting it `false` lets `composer install` pass, but every page
   then 500s.
-- **`ddev drush site:install` edits the committed `settings.php`** by
-  appending a MariaDB block and a literal `hash_salt`. Always
-  `git checkout web/sites/default/settings.php` afterwards.
+- **The database is SQLite in DDEV too** (`.sqlite/site.sqlite`, see
+  docs/adr/0002). DDEV's MariaDB container is omitted, so `ddev mysql`,
+  `ddev export-db` and friends don't apply; delete the file or run
+  `ddev rebuild` instead. An export made on MariaDB won't install on SQLite:
+  Drupal lists the DB driver as a module in `core.extension.yml`.
 - **`ddev restart` wipes Chromium and its apt libraries from the container.**
   That's why `setup.sh` installs the browser to `.browsers/` in the project
   mount (the driver sets `PLAYWRIGHT_BROWSERS_PATH` to that path itself) and

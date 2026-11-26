@@ -4,7 +4,7 @@
 # WIPES the current database. Run from the project root:
 #
 #   ddev rebuild                    (local / Codespaces)
-#   bash scripts/rebuild.sh         (CI / plain PHP with SQLite)
+#   bash scripts/rebuild.sh         (CI / plain PHP)
 #
 # Tome 1.x has no tome:install command (older docs mention one). The rebuild
 # is a fresh install from the exported config, so the same modules are enabled
@@ -24,9 +24,7 @@ if [ ! -f "$CONFIG_DIR/core.extension.yml" ]; then
   exit 1
 fi
 
-if [ -z "${IS_DDEV_PROJECT:-}" ]; then
-  mkdir -p "$(dirname "${DRUPAL_SQLITE_PATH:-$ROOT/.sqlite/site.sqlite}")"
-fi
+mkdir -p "$(dirname "${DRUPAL_SQLITE_PATH:-$ROOT/.sqlite/site.sqlite}")"
 
 $DRUSH site:install --existing-config -y
 $DRUSH tome:import -y

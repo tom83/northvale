@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Env values below are defaults only: real environment variables win.
-  DDEV sets SIMPLETEST_DB to MariaDB; CI falls back to SQLite.
+  Tests use SQLite everywhere, like the site (docs/adr/0002).
 -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"

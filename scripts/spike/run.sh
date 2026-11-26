@@ -4,7 +4,7 @@
 # project relies on? Run from the project root:
 #
 #   ddev exec bash scripts/spike/run.sh       (local, WIPES the DDEV database)
-#   bash scripts/spike/run.sh                 (CI / plain PHP with SQLite)
+#   bash scripts/spike/run.sh                 (CI / plain PHP)
 #
 # Everything Tome writes goes to ./.spike, never to ./config or ./content.
 #
@@ -30,7 +30,7 @@ step() { printf '\n==> %s\n' "$*"; }
 step "Resetting $SPIKE_DIR"
 rm -rf "$SPIKE_DIR"
 mkdir -p "$SPIKE_DIR"/{config,content,files,html}
-[ -z "${IS_DDEV_PROJECT:-}" ] && mkdir -p "$(dirname "${DRUPAL_SQLITE_PATH:-$ROOT/.sqlite/site.sqlite}")"
+mkdir -p "$(dirname "${DRUPAL_SQLITE_PATH:-$ROOT/.sqlite/site.sqlite}")"
 
 step "Installing a fresh site (minimal profile)"
 $DRUSH site:install minimal -y --site-name="Northvale Council (spike)" --account-name=admin
